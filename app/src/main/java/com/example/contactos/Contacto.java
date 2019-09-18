@@ -9,16 +9,6 @@ import java.io.Serializable;
 public class Contacto implements Parcelable {
     String usuario, email, twitter, telefono, fechaNac;
 
-    public Contacto(){}
-
-    public Contacto(String usuario, String email, String twitter, String telefono, String fechaNac) {
-        this.usuario = usuario;
-        this.email = email;
-        this.twitter = twitter;
-        this.telefono = telefono;
-        this.fechaNac = fechaNac;
-    }
-
     protected Contacto(Parcel in) {
         usuario = in.readString();
         email = in.readString();
@@ -38,6 +28,28 @@ public class Contacto implements Parcelable {
             return new Contacto[size];
         }
     };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(usuario);
+        parcel.writeString(email);
+        parcel.writeString(twitter);
+        parcel.writeString(telefono);
+        parcel.writeString(fechaNac);
+    }
+
+    public Contacto(String usuario, String email, String twitter, String telefono, String fechaNac) {
+        this.usuario = usuario;
+        this.email = email;
+        this.twitter = twitter;
+        this.telefono = telefono;
+        this.fechaNac = fechaNac;
+    }
 
     public String getUsuario() {
         return usuario;
@@ -79,17 +91,7 @@ public class Contacto implements Parcelable {
         this.fechaNac = fechaNac;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(usuario);
-        parcel.writeString(email);
-        parcel.writeString(twitter);
-        parcel.writeString(telefono);
-        parcel.writeString(fechaNac);
+    public static Creator<Contacto> getCREATOR() {
+        return CREATOR;
     }
 }
